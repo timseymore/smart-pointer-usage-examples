@@ -2,24 +2,25 @@
 
 This document demonstrates best practices and common patterns for using `std::unique_ptr`, `std::shared_ptr`, and `std::weak_ptr` in modern C++.
 
+## Refer to `SmartPointerExamples.h` for the code of the examples listed below.
 ---
-## Example 1: Managing Ownership
-
----
-
-## Example 2: Avoiding Circular References
+### Example 1: Managing Ownership
 
 ---
 
-## Example 3: Using Smart Pointers in Containers
+### Example 2: Avoiding Circular References
 
 ---
 
-## Example 4: Transferring Ownership
+### Example 3: Using Smart Pointers in Containers
 
 ---
 
-## Example 5: Observing `shared_ptr` with `weak_ptr`
+### Example 4: Transferring Ownership
+
+---
+
+### Example 5: Observing `shared_ptr` with `weak_ptr`
 
 ---
 
