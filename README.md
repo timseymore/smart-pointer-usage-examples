@@ -5,25 +5,9 @@ This document demonstrates best practices and common patterns for using `std::un
 ---
 ## Example 1: Managing Ownership
 
-**Exclusive ownership:** use `std::unique_ptr`
-struct Resource { Resource() { stdcout << "Resource acquired\n"; } ~Resource() { stdcout << "Resource released\n"; } void do_something() { std::cout << "Resource is working\n"; } };
-// Factory function returning unique_ptr stdunique_ptr<Resource> make_resource() { auto res = stdmake_unique<Resource>(); res->do_something(); return res; }
-
-**Shared ownership:** use `std::shared_ptr`
-stdshared_ptr<Resource> make_shared_resource() { auto res = stdmake_shared<Resource>(); res->do_something(); return res; }
-
-**Non-owning access:** use raw pointer or reference
-void use_resource_non_owning(Resource* res) { if (res) res->do_something(); }
-
 ---
 
 ## Example 2: Avoiding Circular References
-
-Two classes with a circular relationship:
-struct B; // Forward declaration
-struct A { stdshared_ptr<B> b; // A owns B ~A() { stdcout << "A destroyed\n"; } };
-struct B { stdweak_ptr<A> a;   // B references A, but does not own ~B() { stdcout << "B destroyed\n"; } };
-// Factory function to create and link A and B stdshared_ptr<A> create_linked_A_and_B() { auto a = stdmake_shared<A>(); auto b = std::make_shared<B>(); a->b = b;   // A owns B b->a = a;   // B references A (non-owning) return a;   // a and b are now linked; no circular ownership }
 
 ---
 
@@ -32,11 +16,10 @@ struct B { stdweak_ptr<A> a;   // B references A, but does not own ~B() { stdcou
 ---
 
 ## Example 4: Transferring Ownership
-void transfer_ownership_example() { auto res1 = stdmake_unique<Resource>(); stdunique_ptr<Resource> res2 = stdmove(res1); // Ownership transferred if (!res1) stdcout << "res1 is now null\n"; if (res2) res2->do_something(); }
+
 ---
 
 ## Example 5: Observing `shared_ptr` with `weak_ptr`
-void weak_ptr_example() { stdshared_ptr<Resource> sharedRes = stdmake_shared<Resource>(); stdweak_ptr<Resource> weakRes = sharedRes; if (auto locked = weakRes.lock()) { locked->do_something(); } sharedRes.reset(); if (weakRes.expired()) { stdcout << "Resource has been destroyed\n"; } }
 
 ---
 
